@@ -20,6 +20,7 @@
 =====================================================================
 =====================================================================
 
+
 What is Kickstart?
 
   Kickstart.nvim is *not* a distribution.
@@ -174,6 +175,13 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- NerdTree custom keymap
+-- using the newer vim.keymap API, with a description for which-key
+vim.keymap.set('n', 'nn', '<cmd>Neotree float<CR>', { noremap = true, silent = true, desc = 'Toggle NERDTree' })
+
+-- ToggleTerm custom keymap
+vim.keymap.set('n', 'tt', '<cmd>ToggleTerm<CR>', { desc = 'Toggle terminal' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -286,20 +294,15 @@ require('lazy').setup({
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
 
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>w', group = '[W]orkspace' },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       }
-      -- visual mode
-      require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
-      }, { mode = 'v' })
     end,
   },
 
@@ -575,7 +578,7 @@ require('lazy').setup({
         -- clangd = {},
         bufls = {},
         gopls = {},
-        pyright = {},
+        -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -785,6 +788,7 @@ require('lazy').setup({
   --   'ellisonleao/gruvbox.nvim',
   --   priority = 1000,
   --   config = true,
+  --   opts = ...,
   --   init = function()
   --     require('gruvbox').setup {
   --       italic = {
@@ -798,25 +802,34 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'gruvbox'
   --   end,
   -- },
-  -- {
-  --   'phha/zenburn.nvim',
-  --   init = function()
-  --     require('zenburn').setup {}
-  --     vim.cmd.colorscheme 'zenburn'
-  --   end,
-  -- },
-  {
-    'projekt0n/github-nvim-theme',
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      require('github-theme').setup {
-        -- ...
-      }
 
-      vim.cmd.colorscheme 'github_light'
+  {
+    'phha/zenburn.nvim',
+    init = function()
+      require('zenburn').setup {}
+      vim.cmd.colorscheme 'zenburn'
     end,
   },
+
+  -- {
+  --   'EdenEast/nightfox.nvim',
+  --   init = function()
+  --     require('nightfox').setup {}
+  --     vim.cmd.colorscheme 'dawnfox'
+  --   end,
+  -- },
+  -- {
+  --   'projekt0n/github-nvim-theme',
+  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     require('github-theme').setup {
+  --       -- ...
+  --     }
+  --
+  --     vim.cmd.colorscheme 'github_light_default'
+  --   end,
+  -- },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
