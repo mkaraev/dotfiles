@@ -576,7 +576,6 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        bufls = {},
         gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -802,34 +801,25 @@ require('lazy').setup({
   --     vim.cmd.colorscheme 'gruvbox'
   --   end,
   -- },
+  --
 
+  -- {
+  --   'phha/zenburn.nvim',
+  --   init = function()
+  --     require('zenburn').setup {}
+  --     vim.cmd.colorscheme 'zenburn'
+  --   end,
+  -- },
   {
-    'phha/zenburn.nvim',
+    'briones-gabriel/darcula-solid.nvim',
+    dependencies = {
+      'rktjmp/lush.nvim',
+    },
     init = function()
-      require('zenburn').setup {}
-      vim.cmd.colorscheme 'zenburn'
+      vim.cmd.colorscheme 'darcula-solid'
     end,
   },
 
-  -- {
-  --   'EdenEast/nightfox.nvim',
-  --   init = function()
-  --     require('nightfox').setup {}
-  --     vim.cmd.colorscheme 'dawnfox'
-  --   end,
-  -- },
-  -- {
-  --   'projekt0n/github-nvim-theme',
-  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1000, -- make sure to load this before all the other start plugins
-  --   config = function()
-  --     require('github-theme').setup {
-  --       -- ...
-  --     }
-  --
-  --     vim.cmd.colorscheme 'github_light_default'
-  --   end,
-  -- },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
